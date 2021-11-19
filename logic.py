@@ -514,8 +514,12 @@ def getLines(useAscii: bool) -> Tuple[str, str, str]:
 
 def truthTableSys(s: str, system: System, useAscii: bool=False):
 	truthList = truthOfSys(s, system)
-	assert len(truthList) > 0
 	hline, vline, cross = getLines(useAscii)
+	if len(truthList) == 0:
+		print(f" {prettifySentence(s)}")
+		print(hline*(len(prettifySentence(s)) + 2))
+		print(' '*((len(prettifySentence(s)) + 1) // 2) + evaluateSys(s, system).symbol)
+		return
 	letters = getAllLettersInSentence([s])
 	pretty = prettifySentence(s)
 	lpretty = len(pretty)
@@ -535,11 +539,16 @@ def truthTableCompareSys(s1: str, s2: str, system: System, useAscii: bool=False)
 	letters = getAllLettersInSentence([s1, s2])
 	truthList1 = truthOfSys(s1, system, letters)
 	truthList2 = truthOfSys(s2, system, letters)
-	assert len(truthList1) > 0
-	assert len(truthList2) > 0
+	assert len(truthList1) == len(truthList2)
 	hline, vline, cross = getLines(useAscii)
 	pretty1 = prettifySentence(s1)
 	pretty2 = prettifySentence(s2)
+	if len(truthList1) == 0:
+		print(f" {pretty1} {vline} {pretty2}")
+		print(hline*(len(pretty1) + 2) + cross + hline*(len(pretty2) + 2))
+		print(' '*((len(pretty1) + 1) // 2) + evaluateSys(s1, system).symbol + ' '*((len(pretty1) + 1) // 2) + (' ' if len(pretty1) % 2 == 0 else '') + vline, end='')
+		print(' '*((len(pretty2) + 1) // 2) + evaluateSys(s2, system).symbol)
+		return
 	for c in letters:
 		print(f' {c} {vline}', end='')
 	print(f' {pretty1} {vline} {pretty2}')
