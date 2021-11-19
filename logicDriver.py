@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import pyinputplus as pyip
 from logic import System, asciiSymbols, defaultSymbols, getSystem, standardSymbols, unicodeSymbols, validSentence, validEvalSentence, \
 	prettifySentence, evaluateSys, validitySys

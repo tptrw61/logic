@@ -27,7 +27,7 @@ def main(sentence: str, system: str='PL', **kwargs):
 	if kwargs['ascii'] >= 5:
 		useAscii = True
 
-	if kwargs.get('sentence2', None) == None:
+	if kwargs.get('sentence2', None) == None or kwargs.get('sentence2', None) == '':
 		truthTableSys(sentence, getSystem(system), useAscii)
 	else:
 		truthTableCompareSys(sentence, kwargs['sentence2'], getSystem(system), useAscii)
