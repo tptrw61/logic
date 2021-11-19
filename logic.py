@@ -17,11 +17,18 @@ class System(Enum):
 	L = 3
 	LP = 4
 
+	@property
+	def hasValuation(self) -> bool:
+		return self != System.LP
+
 def getValue(v: str) -> Value:
 	for val in Value:
 		if v == val.symbol:
 			return val
-
+def getSystem(system: str) -> System:
+	for syst in System:
+		if system == syst.name:
+			return syst
 
 def land(a: Value, b: Value) -> Value:
 	return Value(min(a.value, b.value))
@@ -139,6 +146,27 @@ class Ref:
     def __repr__(self):
         return 'Reference(' + repr(self.val) + ')'
 
+def validSentence(sentence: str, system: System) -> bool:
+	try:
+		letters = getAllLettersInSentence([sentence])
+	except AssertionError:
+		return False
+	try:
+		evaluateAtSys(sentence, {c: Value.FALSE for c in letters}, system)
+		return True
+	except Exception:
+		return False
+	except AssertionError:
+		return False
+def validEvalSentence(sentence: str, system: System) -> bool:
+	try:
+		evaluateSys(sentence, system)
+		return True
+	except Exception:
+		return False
+	except AssertionError:
+		return False
+
 def evaluateSys(s: str, system: System) -> Value:
 	assert s.count('(') == s.count(')')
 	ops = [f for f in staticBinaryFunctions]
@@ -236,7 +264,7 @@ def getValidLettersAndOps() -> Tuple[str, str]:
 			letters += c
 	return (letters, opSymbols)
 
-def getAllLettersInSentence(ls: list) -> list:
+def getAllLettersInSentence(ls: list) -> str:
 	allLetters, ops = getValidLettersAndOps()
 	usedLetters = ''
 	for s in ls:
