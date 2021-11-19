@@ -10,15 +10,11 @@ def toUpper(s: str) -> str:
 
 def validateEvalSentence(system: System):
 	def func(text: str):
-		if text == '':
-			return
 		if not validEvalSentence(text, system):
 			raise Exception(f"'{prettifySentence(text)}' is not a valid sentence in {system.name}")
 	return func
 def validateSentence(system: System):
 	def func(text: str):
-		if text == '':
-			return
 		if not validSentence(text, system):
 			raise Exception(f"'{prettifySentence(text)}' is not a valid sentence in {system.name}")
 	return func
@@ -61,9 +57,7 @@ def main():
 def evaluate(settingsDict: dict):
 	systems = [s.name for s in System if s.hasValuation]
 	system = pyip.inputMenu(systems, 'Choose a system:\n', applyFunc=toUpper, postValidateApplyFunc=getSystem)
-	sentence = pyip.inputCustom(validateEvalSentence(system), 'Enter a sentence (blank will return to the main menu):\n', strip=True, blank=True)
-	if sentence == '':
-		return
+	sentence = pyip.inputCustom(validateEvalSentence(system), 'Enter a sentence: ', strip=True)
 	v = evaluateSys(sentence, system)
 	print(f"'{prettifySentence(sentence)}' evaluates to '{v.symbol}' in {system.name}")
 	print()
@@ -71,9 +65,7 @@ def evaluate(settingsDict: dict):
 def validity(settingsDict: dict):
 	systems = [s.name for s in System]
 	system = pyip.inputMenu(systems, 'Choose a system:\n', applyFunc=toUpper, postValidateApplyFunc=getSystem)
-	sentence = pyip.inputCustom(validateSentence(system), 'Enter a sentence (blank will return to the main menu):\n', strip=True, blank=True)
-	if sentence == '':
-		return
+	sentence = pyip.inputCustom(validateSentence(system), 'Enter a sentence: ', strip=True)
 	valid, counterExample = validitySys(sentence, system)
 	if valid:
 		print(f"'{prettifySentence(sentence)}' is valid in {system.name}")
