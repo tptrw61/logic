@@ -298,12 +298,12 @@ def entailmentPL(premises: str, s: str) -> Tuple[bool, dict]:
 	allLetters, ops = getValidLettersAndOps()
 	usedLetters = ''
 	for c in s:
-		assert c in (allLetters + ops)
+		assert c in (allLetters + ops + ''.join([v.symbol for v in Value]))
 		if c in allLetters and c not in usedLetters:
 			usedLetters += c
 	for p in premiseList:
 		for c in p:
-			assert c in (allLetters + ops)
+			assert c in (allLetters + ops + ''.join([v.symbol for v in Value]))
 			if c in allLetters and c not in usedLetters:
 				usedLetters += c
 	usedLetters = ''.join(sorted(usedLetters))
@@ -336,12 +336,12 @@ def entailmentK(premises: str, s: str) -> Tuple[bool, dict]:
 	allLetters, ops = getValidLettersAndOps()
 	usedLetters = ''
 	for c in s:
-		assert c in (allLetters + ops)
+		assert c in (allLetters + ops + ''.join([v.symbol for v in Value]))
 		if c in allLetters and c not in usedLetters:
 			usedLetters += c
 	for p in premiseList:
 		for c in p:
-			assert c in (allLetters + ops)
+			assert c in (allLetters + ops + ''.join([v.symbol for v in Value]))
 			if c in allLetters and c not in usedLetters:
 				usedLetters += c
 	usedLetters = ''.join(sorted(usedLetters))
@@ -372,12 +372,12 @@ def entailmentL(premises: str, s: str) -> Tuple[bool, dict]:
 	allLetters, ops = getValidLettersAndOps()
 	usedLetters = ''
 	for c in s:
-		assert c in (allLetters + ops)
+		assert c in (allLetters + ops + ''.join([v.symbol for v in Value]))
 		if c in allLetters and c not in usedLetters:
 			usedLetters += c
 	for p in premiseList:
 		for c in p:
-			assert c in (allLetters + ops)
+			assert c in (allLetters + ops + ''.join([v.symbol for v in Value]))
 			if c in allLetters and c not in usedLetters:
 				usedLetters += c
 	usedLetters = ''.join(sorted(usedLetters))
@@ -408,12 +408,12 @@ def entailmentLP(premises: str, s: str) -> Tuple[bool, dict]:
 	allLetters, ops = getValidLettersAndOps()
 	usedLetters = ''
 	for c in s:
-		assert c in (allLetters + ops)
+		assert c in (allLetters + ops + ''.join([v.symbol for v in Value]))
 		if c in allLetters and c not in usedLetters:
 			usedLetters += c
 	for p in premiseList:
 		for c in p:
-			assert c in (allLetters + ops)
+			assert c in (allLetters + ops + ''.join([v.symbol for v in Value]))
 			if c in allLetters and c not in usedLetters:
 				usedLetters += c
 	usedLetters = ''.join(sorted(usedLetters))
