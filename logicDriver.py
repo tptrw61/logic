@@ -89,10 +89,10 @@ def truthTable(settingsDict: dict):
 		return
 	sentence1 = pyip.inputCustom(validateSentence(system), 'Enter a sentence: ', strip=True)
 	if sentenceCount == 1:
-		truthTableSys(sentence1, system, settingsDict[SettingsHelperKeys.PPRINT_USE_ASCII.value])
+		truthTableSys(sentence1, system, settingsDict[SettingsHelperKeys.PPRINT_USE_ASCII.name])
 	elif sentenceCount == 2:
 		sentence2 = pyip.inputCustom(validateSentence(system), 'Enter a sentence: ', strip=True)
-		truthTableCompareSys(sentence1, sentence2, system, settingsDict[SettingsHelperKeys.PPRINT_USE_ASCII.value])
+		truthTableCompareSys(sentence1, sentence2, system, settingsDict[SettingsHelperKeys.PPRINT_USE_ASCII.name])
 	print()
 
 def settings(settingsDict: dict) -> dict:
