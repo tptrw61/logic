@@ -30,6 +30,8 @@ def getSystem(system: str) -> System:
 		if system == syst.name:
 			return syst
 
+#all the logical operators
+###
 def land(a: Value, b: Value) -> Value:
 	return Value(min(a.value, b.value))
 land.unicodeSymbol = '\u2227'
@@ -98,6 +100,7 @@ def leq(a: Value, b: Value) -> Value:
 leq.unicodeSymbol = '='
 leq.asciiSymbol = '='
 leq.symbol = leq.asciiSymbol
+###
 
 functions = [lneg, land, lor, limpliesK, limpliesL, liffK, liffL, ldef, leq]
 staticBinaryFunctions = [lor, land, leq]
@@ -455,12 +458,14 @@ def validityLP(s: str) -> Tuple[bool, dict]:
 def validitySys(s: str, system: System) -> Tuple[bool, dict]:
 	return entailmentSys('', s, system)
 
+#replaces symbols with unicode symbols
 def prettifySentence(s: str) -> str:
 	funcs = sorted(functions, key=lambda f: len(f.asciiSymbol), reverse=True)
 	for f in funcs:
 		s = s.replace(f.asciiSymbol, f.symbol)
 	return s
 
+#change which unicode symbols are used in prettifySentence
 def defaultSymbols():
 	for f in functions:
 		f.symbol = f.unicodeSymbol
@@ -512,12 +517,13 @@ def truthOfK(s: str, inp: str=None) -> list:
 def truthOfL(s: str, inp: str=None) -> list:
 	return truthOfSys(s, System.L, inp)
 
-'''returns in order hline, vline, cross'''
+#returns in order hline, vline, cross
 def getLines(useAscii: bool) -> Tuple[str, str, str]:
 	if useAscii:
 		return ('-', '|', '|')
 	return ('\u2500', '\u2502', '\u253c')
 
+#prints a truth table for one sentence
 def truthTableSys(s: str, system: System, useAscii: bool=False):
 	truthList = truthOfSys(s, system)
 	hline, vline, cross = getLines(useAscii)
@@ -541,6 +547,7 @@ def truthTableSys(s: str, system: System, useAscii: bool=False):
 		dist = (lpretty + 1) // 2
 		print(' '*dist + d['truth'].symbol)
 
+#prints a truth table for two sentences
 def truthTableCompareSys(s1: str, s2: str, system: System, useAscii: bool=False):
 	letters = getAllLettersInSentence([s1, s2])
 	truthList1 = truthOfSys(s1, system, letters)
