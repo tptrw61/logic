@@ -478,6 +478,8 @@ def asciiSymbols():
 	for f in functions:
 		f.symbol = f.asciiSymbol
 
+#evaluates at all possible interpretations
+#also allows a custom set of letters
 def truthOfSys(s: str, system: System, inp: str=None) -> list:
 	if system == System.PL:
 		assert s.count('#') == 0
@@ -485,6 +487,10 @@ def truthOfSys(s: str, system: System, inp: str=None) -> list:
 		usedLetters = getAllLettersInSentence([s])
 	else:
 		usedLetters = inp
+		for c in getAllLettersInSentence([s]):
+			if c not in usedLetters:
+				usedLetters += c
+		usedLetters.sort()
 	#start evaluating
 	rv = []
 	for state in getStates(len(usedLetters)):
