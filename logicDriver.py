@@ -7,7 +7,7 @@ from logic import System, asciiSymbols, defaultSymbols, getSystem, standardSymbo
 class SettingsKeys(Enum):
 	PRETTY_PRINT = 'Pretty Print'
 class SettingsHelperKeys(Enum):
-	PPRINT_USE_ASCII = 'pprint use ascii'
+	PPRINT_USE_ASCII = 1
 
 def validateEvalSentence(system: System):
 	def func(text: str):
@@ -23,13 +23,13 @@ def validateSentence(system: System):
 def getDefaultSettings() -> dict:
 	settingsDict = {
 		SettingsKeys.PRETTY_PRINT.value: 2,
-		SettingsHelperKeys.PPRINT_USE_ASCII: False
+		SettingsHelperKeys.PPRINT_USE_ASCII.name: False
 	}
 	return settingsDict
 
 def setup():
 	settings = getDefaultSettings()
-	settings[SettingsHelperKeys.PPRINT_USE_ASCII.value] = settings[SettingsKeys.PRETTY_PRINT.value] == 0
+	settings[SettingsHelperKeys.PPRINT_USE_ASCII.name] = settings[SettingsKeys.PRETTY_PRINT.value] == 0
 	if settings[SettingsKeys.PRETTY_PRINT.value] <= 1:
 		asciiSymbols()
 	elif settings[SettingsKeys.PRETTY_PRINT.value] == 2:
@@ -96,12 +96,14 @@ def truthTable(settingsDict: dict):
 	print()
 
 def settings(settingsDict: dict) -> dict:
-	options = [s.value for s in SettingsKeys] + ['Back']
+	options = [s.value for s in SettingsKeys] + ['Debug', 'Back']
 	defaultSettings = getDefaultSettings()
 	while True:
 		choice = pyip.inputMenu(options, 'Choose an option:\n', numbered=True)
 		if choice == 'Back':
 			break
+		elif choice == 'Debug':
+			debugSettings(settingsDict)
 		elif choice == SettingsKeys.PRETTY_PRINT.value:
 			print('Higher values means more unicode. Values range from 0 to 4')
 			print('0 means that no unicode will be used')
@@ -110,9 +112,9 @@ def settings(settingsDict: dict) -> dict:
 			level = pyip.inputInt(f"Enter a value (current: {settingsDict[choice]}): ", min=0, max=4)
 			settingsDict[choice] = level
 			if level == 0:
-				settingsDict[SettingsHelperKeys.PPRINT_USE_ASCII.value] = True
+				settingsDict[SettingsHelperKeys.PPRINT_USE_ASCII.name] = True
 			else:
-				settingsDict[SettingsHelperKeys.PPRINT_USE_ASCII.value] = False
+				settingsDict[SettingsHelperKeys.PPRINT_USE_ASCII.name] = False
 			if level <= 1:
 				asciiSymbols()
 			elif level == 2:
@@ -123,6 +125,26 @@ def settings(settingsDict: dict) -> dict:
 				unicodeSymbols()
 	print()
 	return settingsDict
+
+def debugSettings(settingsDict: dict):
+	options = ['Display Standard Settings', 'Display All Settings', 'Back']
+	while True:
+		choice = pyip.inputMenu(options, 'Choose an option:\n', numbered=True)
+		if choice == 'Back':
+			break
+		elif choice == 'Display Standard Settings':
+			print()
+			print('Settings:')
+			for k in SettingsKeys:
+				print(f"\t{k.value}: {settingsDict[k.value]}")
+			print()
+		elif choice == 'Display All Settings':
+			print()
+			print('Settings:')
+			for k, v in settingsDict.items():
+				print(f"\t{k}: {v}")
+			print()
+	print()
 
 if __name__ == '__main__':
 	main()
