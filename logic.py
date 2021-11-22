@@ -495,7 +495,7 @@ def truthOfSys(s: str, system: System, inp: str=None) -> list:
 		for c in getAllLettersInSentence([s]):
 			if c not in usedLetters:
 				usedLetters += c
-		usedLetters.sort()
+		usedLetters = ''.join(sorted(list(usedLetters)))
 	#start evaluating
 	rv = []
 	for state in getStates(len(usedLetters)):
