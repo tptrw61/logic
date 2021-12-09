@@ -575,3 +575,13 @@ def truthTableCompareSys(s1: str, s2: str, system: System, useAscii: bool=False)
 		dist2 = (len(pretty2) + 1) // 2
 		print(' '*dist1 + truthList1[i]['truth'].symbol + ' '*dist1 + (' ' if len(pretty1) % 2 == 0 else '') + vline, end='')
 		print(' '*dist2 + truthList2[i]['truth'].symbol)
+
+#removes all 1s and 0s from sentence to make it strict
+def makeSentenceStrict(sentence: str) -> str:
+	letters = getAllLettersInSentence([sentence])
+	if letters == '':
+		letters = 'P'
+	letter = letters[0]
+
+	sentence = sentence.replace('0', f'!({letter}^~{letter})')
+	sentence = sentence.replace('1', f'~!({letter}^~{letter})')
